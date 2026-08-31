@@ -1,6 +1,6 @@
 # Approach & Architecture
 
-Technical write-up for [Family Finance Copilot](README.md) — a self-hosted BI stack for household finance, with Claude Sonnet powering a narrative insights layer and a conversational bot.
+Technical write-up for [BI Copilot for Household Finance](README.md) — a self-hosted BI stack for household finance, with Claude Sonnet powering a narrative insights layer and a conversational bot.
 
 Source code and data are private; this document describes the design.
 
@@ -164,13 +164,12 @@ budgets    — year, category, subcategory, amount
 
 ## 4. Semantic layer
 
-Between the raw table and anything a person reads sits a set of household-specific rules. This is the part no off-the-shelf app could express, and the reason building it was worth it:
+Between the raw table and anything a person reads sits a business-rules layer that encodes domain knowledge a generic schema can't express on its own. This is the part no off-the-shelf app could give me, and the reason building it was worth it. A few examples of the *class* of problem it solves:
 
-- **Shared-account contributions.** Each person transfers into a joint account monthly. Those transfers are excluded from spending — they're funding, not consumption — but tracked separately for contribution totals. One person's payroll also deposits directly into the joint account, which has to be added to their contribution without being counted as household income twice.
-- **Investment contributions** are excluded from spend entirely and surfaced as their own metric. They're not an expense; treating them as one makes every savings-rate number wrong.
-- **Card credits vs. purchase returns.** Statement credits and cash-back redemptions are not refunds and must not reduce net spend. An actual returned item *should* reduce spend, under the original purchase category. Banks present both identically.
-- **Settlement.** Who owes whom, given shared expenses paid from personal cards and personal expenses paid from the joint account.
-- **Guilt-free spending.** Income minus shared contributions minus committed categories — the number that actually answers "can I buy this?"
+- **Transfer vs. spend classification.** Not every debit is consumption — money moving between accounts (savings, investments, shared pots) needs to be excluded from spend and tracked as its own category instead, without being silently dropped or double-counted against income.
+- **Ambiguous transaction types.** Some transactions look identical on a statement but mean opposite things economically (e.g. a credit that's a refund vs. one that isn't) — telling them apart determines whether they should offset spend or not.
+- **Multi-party reconciliation.** When expenses are paid from a mix of individual and shared sources, netting out who owes whom requires rules a bank statement has no way to express.
+- **Derived affordability metrics.** Headline numbers like income and total spend aren't the ones that answer "can I afford this?" — that requires composing several intermediate figures into one derived metric.
 
 All of it is deterministic Python over the warehouse. None of it is delegated to a model.
 
