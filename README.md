@@ -24,11 +24,11 @@ The interesting part, to me, isn't that it's a budgeting app. It's that it's a f
 
 ## The three pillars
 
-### A real dashboard, not a spending tracker
+### 1. A real dashboard, not a spending tracker
 
 Summary cards across all accounts — per person and combined — with month-over-month stacked bars, a category donut, and a drill-down table by category and subcategory. Filter by year, month, and person. Every figure is computed from the transaction warehouse, not from a bank's own categorization.
 
-### AI Insights — the narrative layer
+### 2. AI Insights — the narrative layer
 
 A dashboard tells you *what* the numbers are; it doesn't tell you what they *mean*. The Insights page computes the structured financials server-side, then hands them to Claude Sonnet to answer four standing questions in plain English:
 
@@ -43,7 +43,7 @@ A dashboard tells you *what* the numbers are; it doesn't tell you what they *mea
   <img src="screenshots/ai-insights.png" alt="AI Insights — Claude-generated financial narrative, guilt-free spending, YTD settlement" width="900">
 </p>
 
-### Ask-Anything Bot — BI in my pocket
+### 3. Ask-Anything Bot — BI in my pocket
 
 A Telegram bot backed by the same warehouse. Ask *"how much did we spend on dining last month?"* and get a real answer from live data — not a guess, not a stale cached report. Follow-ups work, because the bot keeps recent conversation context: *"why is that so high?"* resolves against the previous answer.
 
