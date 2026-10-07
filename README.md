@@ -108,7 +108,7 @@ Full technical write-up, including the normalization pipeline and design trade-o
 
 ## Repo contents
 
-This is a **case study, not a distribution**. The application runs on my household's live financial data, so the source and database are private.
+This is a case study, not a distribution. The application runs on my household's live financial data, so the source and database are private.
 
 - `README.md` — this overview
 - `APPROACH.md` — architecture, data pipeline, and design decisions
